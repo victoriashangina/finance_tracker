@@ -1,0 +1,5 @@
+﻿date;description;amount;currency;type
+2026-11-01;Продукты;-1250.50;RUB;expense
+2026-11-02;Зарплата;85000.00;RUB;income
+2026-11-03;Кофейня;-390.00;RUB;expense
+2026-11-04;Возврат заказа;450.00;RUB;refund

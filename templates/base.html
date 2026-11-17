@@ -1,0 +1,14 @@
+{% load static finance_tags %}
+<!doctype html><html lang="ru"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>{{ title|default:'Личные финансы' }} — Поток</title><link rel="stylesheet" href="{% static 'css/app.css' %}?v=2"><script src="{% static 'js/app.js' %}" defer></script><link rel="icon" type="image/svg+xml" href="{% static 'favicon.svg' %}"></head>
+<body><a href="#main" class="skip-link">К содержимому</a>
+<aside class="sidebar" id="sidebar"><a class="brand" href="{% url 'dashboard' %}"><span class="brand-mark">≋</span> поток<span class="brand-dot">.</span></a><div class="sidebar-label">ЛИЧНЫЕ ФИНАНСЫ</div>
+<nav aria-label="Основная навигация">{% with route=request.resolver_match.url_name %}
+<a href="{% url 'dashboard' %}" class="{% if route == 'dashboard' %}active{% endif %}">{% icon 'grid' %}Обзор</a>
+<a href="{% url 'accounts' %}" class="{% if route == 'accounts' %}active{% endif %}">{% icon 'card' %}Мои счета</a>
+<a href="{% url 'operations' %}" class="{% if route == 'operations' %}active{% endif %}">{% icon 'list' %}Операции</a>
+<a href="{% url 'analytics' %}" class="{% if route == 'analytics' %}active{% endif %}">{% icon 'chart' %}Аналитика</a>
+<a href="{% url 'import_upload' %}" class="{% if route == 'import_upload' or route == 'import_preview' %}active{% endif %}">{% icon 'upload' %}Импорт выписки</a>
+<a href="{% url 'categories' %}" class="{% if route == 'categories' %}active{% endif %}">{% icon 'tag' %}Категории</a>{% endwith %}</nav>
+<div class="sidebar-bottom"><div class="sidebar-note">Все твои счета.<br><strong>Одна ясная картина.</strong></div><div class="user-info"><span class="avatar">{{ request.user.first_name|default:request.user.username|first|upper }}</span><div><strong>{{ request.user.first_name|default:request.user.username }}</strong><small>Личный кабинет</small></div><form method="post" action="{% url 'logout' %}">{% csrf_token %}<button class="icon-button" aria-label="Выйти" title="Выйти">{% icon 'logout' %}</button></form></div></div></aside>
+<div class="workspace"><header class="topbar"><button class="mobile-menu icon-button" aria-label="Меню" aria-controls="sidebar" aria-expanded="false">{% icon 'menu' %}</button><span>Личный кабинет <span class="slash">/</span> <strong>{{ title }}</strong></span><span class="top-meta">{% now 'd E Y' %}<span class="currency-label">₽ RUB</span></span></header>
+<main id="main" class="content">{% if messages %}<div class="messages" aria-live="polite">{% for message in messages %}<div class="message {{ message.tags }}">{{ message }}</div>{% endfor %}</div>{% endif %}{% block content %}{% endblock %}</main><footer class="footer">Поток · Учёт личных финансов<span>Данные видны только в твоём кабинете</span></footer></div></body></html>
